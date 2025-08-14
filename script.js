@@ -209,3 +209,101 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 */
+// Show modal on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the elements
+  const registerBtn = document.getElementById('register-btn');
+  const modal = document.getElementById('registration-modal');
+  const closeModal = document.querySelector('.close-modal');
+  
+  // Show modal when register button is clicked
+  registerBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.style.display = 'flex';
+  });
+  
+  // Hide modal when close button is clicked
+  closeModal.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+  
+  // Hide modal when clicking outside the modal content
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+});
+
+// login page
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Get modal elements
+  const loginModal = document.getElementById('login-modal');
+  const registerModal = document.getElementById('register-modal');
+
+  // Get buttons
+  const loginBtn = document.getElementById('login-btn');
+  const registerBtn = document.getElementById('register-btn');
+  const showRegister = document.getElementById('show-register');
+  const showLogin = document.getElementById('show-login');
+
+  // Close buttons inside modals
+  const closeButtons = document.querySelectorAll('.close-modal');
+
+  // --- Open Login Modal ---
+  loginBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    loginModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+
+  // --- Open Register Modal ---
+  registerBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    registerModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+
+  // --- Switch from Login → Register ---
+  showRegister.addEventListener('click', function(e) {
+    e.preventDefault();
+    loginModal.style.display = 'none';
+    registerModal.style.display = 'flex';
+  });
+
+  // --- Switch from Register → Login ---
+  showLogin.addEventListener('click', function(e) {
+    e.preventDefault();
+    registerModal.style.display = 'none';
+    loginModal.style.display = 'flex';
+  });
+
+  // --- Close modals when ✕ clicked ---
+  closeButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      loginModal.style.display = 'none';
+      registerModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+  });
+
+  // --- Close modals when clicking outside ---
+  [loginModal, registerModal].forEach(modal => {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+  });
+
+  // --- Close modals on Escape key ---
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      loginModal.style.display = 'none';
+      registerModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  });
+});
