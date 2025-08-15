@@ -1046,10 +1046,9 @@ body.modal-open {
 }
 
 .modal-content .submit-btn:hover {
-  background: #3367d6;
+  background: #fbfdff;
 }
 /* login page */
-
 
 .form-container {
   background: #fff;
@@ -1058,7 +1057,7 @@ body.modal-open {
   width: 90%;
   max-width: 450px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  animation: fadeIn 0.5s ease-out;
+  animation: slideDownFade 0.5s ease-out forwards; /* Updated animation */
 }
 
 /* Form elements */
@@ -1090,6 +1089,15 @@ body.modal-open {
   background-color: #ff5252;
 }
 
+.forgot-password {
+  color: white;
+  text-decoration: none; /* underline हटाने के लिए */
+}
+
+.forgot-password:hover {
+  text-decoration: underline; /* hover पे underline */
+}
+
 /* Links */
 .register-link, .login-link {
   text-align: center;
@@ -1117,10 +1125,11 @@ body.modal-open {
   margin-right: 10px;
 }
 
-/* Animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Slide + fade animation */
+@keyframes slideDownFade {
+  0% { opacity: 0; transform: translateY(-30px) scale(0.95); }
+  50% { opacity: 0.7; transform: translateY(10px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Responsive */

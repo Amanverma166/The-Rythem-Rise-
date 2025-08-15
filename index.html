@@ -51,24 +51,33 @@
     </nav>
 
     <!-- Login Modal -->
+     <!-- Login Modal -->
 <div class="modal-overlay" id="login-modal">
   <div class="modal-content">
     <span class="close-modal">✕</span>
     <h2>Login to Your Account</h2>
-    <form id="login-form">
+
+    <!-- Formspree Integration -->
+    <form id="login-form" action="https://formspree.io/f/xdkdyvnd" method="POST">
       <div class="form-group">
-        <input type="email" placeholder="Email Address" required>
+        <input type="email" name="Email" placeholder="Email Address" required>
       </div>
       <div class="form-group">
-        <input type="password" placeholder="Password" required>
+        <input type="password" name="Password" placeholder="Password" required>
       </div>
       <div class="form-options">
         <div class="form-check">
-          <input type="checkbox" id="remember-me">
+          <input type="checkbox" id="remember-me" name="Remember">
           <label for="remember-me">Remember me</label>
         </div>
-        <a href="#" class="forgot-password">Forgot password?</a>
+        <a href="#" class="forgot-password">Forget password?</a>
       </div>
+
+      <!-- Optional hidden fields -->
+      <input type="hidden" name="_subject" value="New Login Submission">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://yourwebsite.com/thankyou.html">
+
       <button type="submit" class="submit-btn">Login</button>
       <div class="register-link">
         Don't have an account? <a href="#" id="show-register">Register here</a>
@@ -77,28 +86,113 @@
   </div>
 </div>
 
+<style>
+    /* Overlay + modal */
+#login-modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(41,36,36,0);
+  z-index:1000;
+  justify-content:center; align-items:center;
+}
+
+#login-modal.show {
+  display: flex;
+  animation: overlayFadeIn 0.5s forwards;
+}
+
+#login-modal .modal-content {
+  background: #0000003c;
+  padding: 30px;
+  border-radius: 8px;
+  width:90%;
+  max-width:450px;
+  position:relative;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  animation: slideDownFade 0.5s forwards;
+}
+
+/* Close button */
+#login-modal .close-modal {
+  position:absolute; top:15px; right:20px; font-size:22px; cursor:pointer; color:#ffffff;
+}
+
+#login-modal .close-modal:hover {
+  color: #ff6b6b; /* hover effect */
+  transition: color 0.3s;
+}
+
+/* Slide + fade animation */
+@keyframes slideDownFade {
+  0% { opacity:0; transform: translateY(-30px) scale(0.95); }
+  50% { opacity:0.7; transform: translateY(10px) scale(1.02); }
+  100% { opacity:1; transform: translateY(0) scale(1); }
+}
+
+@keyframes overlayFadeIn {
+  from { background: rgba(41,36,36,0); }
+  to { background: rgba(41,36,36,0.7); }
+}
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('login-modal');
+  const closeBtn = modal.querySelector('.close-modal');
+
+  // Open modal on clicking login button/link
+  const loginBtn = document.getElementById('login-btn'); // assume your login button has id="login-btn"
+  if(loginBtn){
+    loginBtn.addEventListener('click', () => {
+      modal.classList.add('show');
+    });
+  }
+
+  // Close modal on X
+  closeBtn.addEventListener('click', () => {
+    modal.classList.remove('show');
+  });
+
+  // Close on overlay click
+  window.addEventListener('click', (e) => {
+    if(e.target === modal) modal.classList.remove('show');
+  });
+});
+</script>
+
+
 <!-- Register Modal (same style as login) -->
 <div class="modal-overlay" id="register-modal">
   <div class="modal-content">
     <span class="close-modal">✕</span>
     <h2>Create New Account</h2>
-    <form id="register-form">
+
+    <!-- FormSubmit Integration -->
+    <form id="register-form" action="https://formsubmit.co/amanv5174@gmail.com" method="POST">
       <div class="form-group">
-        <input type="text" placeholder="Full Name" required>
+        <input type="text" name="FullName" placeholder="Full Name" required>
       </div>
       <div class="form-group">
-        <input type="email" placeholder="Email Address" required>
+        <input type="email" name="Email" placeholder="Email Address" required>
       </div>
       <div class="form-group">
-        <input type="password" placeholder="Create Password" required>
+        <input type="password" name="Password" placeholder="Create Password" required>
       </div>
       <div class="form-group">
-        <input type="password" placeholder="Confirm Password" required>
+        <input type="password" name="ConfirmPassword" placeholder="Confirm Password" required>
       </div>
       <div class="form-check">
-        <input type="checkbox" id="accept-terms" required>
+        <input type="checkbox" id="accept-terms" name="AcceptTerms" required>
         <label for="accept-terms">I agree to terms & conditions</label>
       </div>
+
+      <!-- Hidden fields for FormSubmit -->
+      <input type="hidden" name="_subject" value="New Registration Submission">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://yourwebsite.com/thankyou.html">
+
       <button type="submit" class="submit-btn">Register</button>
       <div class="login-link">
         Already have an account? <a href="#" id="show-login">Login here</a>
@@ -106,6 +200,7 @@
     </form>
   </div>
 </div>
+
 
 
     <!-- Hero Section -->
@@ -272,69 +367,76 @@
 </div>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-info">
-            <h2>Contact Us</h2>
-            <div class="contact-details">
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <p>YDC Tower Opp.Liberty Cinema Bajrang Bhavan ,Rohtak</p>
+   <section class="contact" id="contact">
+    <div class="contact-info">
+        <h2>Contact Us</h2>
+        <div class="contact-details">
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
                 </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <p>9992915626</p>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <p>amanv5174@gmail.com</p>
-                </div>
+                <p>YDC Tower Opp.Liberty Cinema Bajrang Bhavan ,Rohtak</p>
             </div>
-            <div class="social-links">
-                <a href="#" class="social-link">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-youtube"></i>
-                </a>
-                <a href="#" class="social-link">
-                    <i class="fab fa-tiktok"></i>
-                </a>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <p>9992915626</p>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <p>amanv5174@gmail.com</p>
             </div>
         </div>
-        <div class="contact-form">
-            <form>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="tel" id="phone">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
+        <div class="social-links">
+            <a href="#" class="social-link">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="#" class="social-link">
+                <i class="fab fa-tiktok"></i>
+            </a>
         </div>
-    </section>
+    </div>
+    <div class="contact-form">
+        <form action="https://formsubmit.co/amanv5174@gmail.com" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="Name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="Email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="Phone">
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="Message" rows="5" required></textarea>
+            </div>
+
+            <!-- Hidden fields for FormSubmit -->
+            <input type="hidden" name="_subject" value="New Contact Message">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://yourwebsite.com/thankyou.html">
+
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </div>
+</section>
+
 
     <!-- Footer -->
     <footer>
@@ -352,35 +454,200 @@
         <div class="copyright">
             &copy; 2025 THE RYTHEM RISE Dance Academy. All Rights Reserved.
         </div>
-        <!-- reg popup -->
-        <div class="modal-overlay" id="registration-modal">
+       
+        <!-- Register Modal -->
+<div class="modal-overlay" id="register-modal">
   <div class="modal-content">
     <span class="close-modal">✕</span>
-    <h2>Create Account</h2>
-    <form id="modal-reg-form">
+    <h2>Create New Account</h2>
+
+    <!-- FormSubmit Integration -->
+    <form id="register-form" action="https://formsubmit.co/amanv5174@gmail.com" method="POST">
       <div class="form-group">
-        <input type="text" placeholder="Full Name" required>
+        <input type="text" name="FullName" placeholder="Full Name" required>
       </div>
       <div class="form-group">
-        <input type="tel" placeholder="Mobile Number" required>
+        <input type="email" name="Email" placeholder="Email Address" required>
       </div>
       <div class="form-group">
-        <input type="email" placeholder="Email Address" required>
+        <input type="password" name="Password" placeholder="Create Password" required>
       </div>
       <div class="form-group">
-        <input type="password" placeholder="Password" required>
+        <input type="password" name="ConfirmPassword" placeholder="Confirm Password" required>
       </div>
       <div class="form-check">
-        <input type="checkbox" id="modal-terms" required>
-        <label for="modal-terms">I agree to Terms & Conditions</label>
+        <input type="checkbox" id="accept-terms" name="AcceptTerms" required>
+        <label for="accept-terms">I agree to terms & conditions</label>
       </div>
+
+      <!-- Hidden fields for FormSubmit -->
+      <input type="hidden" name="_subject" value="New Registration Submission">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://yourwebsite.com/thankyou.html">
+
       <button type="submit" class="submit-btn">Register</button>
-       <div class="login-link">
+      <div class="login-link">
         Already have an account? <a href="#" id="show-login">Login here</a>
       </div>
     </form>
   </div>
 </div>
+
+
+        <!-- Register Modal -->
+<div class="modal-overlay" id="register-modal">
+  <div class="modal-content">
+    <span class="close-modal">✕</span>
+    <h2>Create New Account</h2>
+
+    <form id="register-form" action="https://formsubmit.co/amanv5174@gmail.com" method="POST">
+      <div class="form-group">
+        <input type="text" name="FullName" placeholder="Full Name" required>
+      </div>
+      <div class="form-group">
+        <input type="email" name="Email" placeholder="Email Address" required>
+      </div>
+      <div class="form-group">
+        <input type="password" name="Password" placeholder="Create Password" required>
+      </div>
+      <div class="form-group">
+        <input type="password" name="ConfirmPassword" placeholder="Confirm Password" required>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="accept-terms" name="AcceptTerms" required>
+        <label for="accept-terms">I agree to terms & conditions</label>
+      </div>
+
+      <!-- Hidden fields for FormSubmit -->
+      <input type="hidden" name="_subject" value="New Registration Submission">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://yourwebsite.com/thankyou.html">
+
+      <button type="submit" class="submit-btn">Register</button>
+      <div class="login-link">
+        Already have an account? <a href="#" id="show-login">Login here</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Register CSS -->
+ <style>
+#register-modal {
+  display: none; 
+  position: fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(41,36,36,0.7);
+  z-index: 1000; justify-content:center; align-items:center;
+  animation: overlayFadeIn 0.5s forwards;
+}
+
+#register-modal .modal-content {
+  background: #9d999900;
+  padding: 30px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: slideDownFade 0.5s ease-out forwards;
+}
+
+#register-modal .close-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #fffcfc;
+}
+
+#register-modal h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+#register-modal .form-group { margin-bottom: 20px; }
+#register-modal .form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ffffffc6;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+#register-modal .form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#register-modal .form-check input { margin-right: 10px; }
+
+#register-modal .submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color:#4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#register-modal .submit-btn:hover { background-color: #ff5252; }
+
+#register-modal .login-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+#register-modal .login-link a {
+  color: #ff6b6b;
+  text-decoration: none;
+}
+
+#register-modal .login-link a:hover { text-decoration: underline; }
+
+/* Animations */
+@keyframes slideDownFade {
+  0% { opacity: 0; transform: translateY(-30px) scale(0.95); }
+  50% { opacity: 0.7; transform: translateY(10px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes overlayFadeIn {
+  from { background: rgba(41,36,36,0); }
+  to { background: rgba(41,36,36,0.7); }
+}
+
+@media (max-width: 500px) {
+  #register-modal .modal-content { padding: 20px; }
+}
+</style>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('register-modal');
+  const closeBtn = modal.querySelector('.close-modal');
+
+  // Show modal automatically on page load
+  modal.style.display = 'flex';
+
+  // Close modal on clicking 'X'
+  closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+
+  // Close modal if user clicks outside modal content
+  window.addEventListener('click', (e) => { if(e.target === modal){ modal.style.display = 'none'; } });
+});
+</script>
+
+
+
+
         
     </footer>
 
